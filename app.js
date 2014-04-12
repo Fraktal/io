@@ -11,7 +11,7 @@
   var sentiment = require('sentiment');   
 
 
-  server.listen(3000);
+  server.listen(8081);
 
   var TwitterEventStreamer = require('./twitter/twittereventstreamer');
   var Geocoder = require('./geocoder/geocoder');
