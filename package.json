@@ -1,0 +1,23 @@
+{
+  "name": "io",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app"
+  },
+  "dependencies": {
+    "express": "3.0.0rc5",
+    "jade": "*",
+    "stylus": "*",
+    "ntwitter":"*",
+    "mysql": "*",
+    "async": "*",
+    "node-uuid": "*",
+    "socket.io": "~0.9.6",
+    "node-static": "*",
+    "geocoder": "0.1.0",
+    "winston": "0.6.2",
+    "nib": "*",
+    "sentiment": "*"
+  }
+}
