@@ -1,11 +1,12 @@
 
+
     TwitterCredentials = function(){
             
             var secret = { 
-                consumer_key : 'kJ5QtZshR9rqelu3EXF8Q',
-                consumer_secret: '3hsW5aUufM5arIXu7oEC0WcbMe1YMDAny2wXLc5DA',
-                access_token_key: '360021152-z7ukll2GLEFWZyKrnjhQ4B9L5uUpyL4xs4p6wm7r',
-                access_token_secret: 'cdHFUqDgZ3tLgFxTJLxE5lhTbF1yZT0JJ26Nsm7rRg'
+                consumer_key : 'msSPQN41ry6Bmz1DWEQ',
+                consumer_secret: 'XJgvlLNq0HZZ9T3g1a0MdoXnYqEg0hnArfUIgScbB0',
+                access_token_key: '700581722-t3azV65w0ee8qlV7XCfP2ZY9FYTqHR6b0a9x24UV',
+                access_token_secret: 'kwQESpfOa3gYqe8ZFaidYG2sKTcD5HAVyDY35J8'
             };
 
              function getConsumerKry() {

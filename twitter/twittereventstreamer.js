@@ -18,7 +18,7 @@
         var twitterCredentials = new TwitterCredentials(); 
         var twit = new twitter(twitterCredentials.getSecrets());
 
-        counter = 0;
+        counter = 0; 
              
         twit.stream('statuses/filter',{track: keyword }, function(stream) {
                   stream.on('data', function(tweet) {
@@ -26,9 +26,9 @@
                   });
                   
                   stream.on('error', function(error,statusCode) {
-                        console.log('Error was this %j', error);
-                        console.log('Error was this ' + statusCode);
-                        self.emit('error','Error occured on Twitter maybe?');
+                        console.log('Error ==> ', error);
+                        console.log('Error status code  ' + statusCode);
+                        self.emit('error','Error occured');
                   });
             }
         );

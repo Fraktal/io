@@ -14,27 +14,15 @@
 
 
     $(document).ready(function() {
-        var socket = io.connect('http://localhost:3000');
+        var socket = io.connect('http://localhost:8081');
         socket.on('tweet', function (tweet) {
              console.log(tweet);
-             //var row = '<tr><td>' + tweet.user + '</td><td>' + tweet.text + '</td></th>';
-             
-             /*if( $('#tweets tr').size() > 8) {
-                $('#tweets tr:last').fadeOut(500,function(row) {
-                    $('#tweets tr:last').remove();    
-                    $('#tweets tr:first').after(row);             
-                    $('#tweetcount').html(tweet.count);             
-                 });
-               } else {
-                    $('#tweets tr:first').after(row);             
-                    $('#tweetcount').html(tweet.count);             
-              } */
 
             $('#page-body').css({'background-color': '#9E99A8'});  
 
-            var tweetLatLon = new google.maps.LatLng(tweet.lat, tweet.lon);  
-            var posLatLon = new google.maps.LatLng(pos_tweet.lat, pos_tweet.lon);
-            var negLatLon = new google.maps.LatLng(neg_tweet.lat, neg_tweet.lon);   
+            //var tweetLatLon = new google.maps.LatLng(tweet.lat, tweet.lon);  
+            var posLatLon = new google.maps.LatLng(tweet.poslat, tweet.poslon);
+            var negLatLon = new google.maps.LatLng(tweet.neglat, tweet.neglon);   
             
             var infoWindowText = '<div id="content">' + 
                                  '<div id="bodyContent">' + 
@@ -60,6 +48,7 @@
                             animation: google.maps.Animation.DROP
             });
 
+            
             var marker_blue = new google.maps.Marker({
                             position: negLatLon,
                             map: map,
@@ -71,14 +60,11 @@
             google.maps.event.addListener(marker, 'click', function() {
                     infowindow.open(map,marker);
             });
-            
-            $('#positive').html(Math.round((tweet.positive / 255) * 100) + ' % ');             
-            $('#negative').html(Math.round((tweet.negative / 255) * 100) + ' % ');             
+                       
             $('#tweetcount').html(tweet.count);             
             $('#failed-lookups').html(tweet.failedLookUps);             
 	        
-            emotion = 'rgb(' + tweet.negative + ', ' + tweet.positive + ', ' + '0)'; 
-            console.log('emotion is ' + emotion);
+            //emoticon = 'rgb(' + tweet.negative + ', ' + tweet.positive + ', ' + '0)'; 
              
 
         });

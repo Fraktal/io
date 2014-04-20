@@ -61,9 +61,10 @@
   });
   
   var failedLookUps = 0;
-  
   var positive = 0;
   var negative = 0;
+  var pos_percent = 0.0;
+  var neg_percent = 0.0;
 
   tes.on('tweet', function(tweet) {
         ++tweetcounter;
@@ -74,13 +75,19 @@
             console.log('Score is ' + results.score);
             if(results.score > 0 ) {
                 positive++;
-            } else {
+                var m = 0;
+                m = positive/tweetcounter;
+                pos_percent = m.toFixed(2);
+                console.log('Positive Count: ' + positive + '  Percent Postive: ' + (pos_percent*100) + '%');
+            } 
+            if(results.score < 0 ) {
                 negative++;
+                var n = 0;
+                n = negative/tweetcounter;
+                neg_percent = n.toFixed(2);
+                console.log('Negative Count: ' + negative + '  Percent Negative: ' + (neg_percent*100) + '%');
             }
 
-            
-            score = calculateRG(positive, negative);
-            console.log('Positive - ' + score.positive + ' Negative ' + score.negative);
 
             geocoder.geocode(tweet.user.location, function(err, geodata) {
                 if(!err) {
@@ -89,40 +96,27 @@
                                      ' Lat :' + geodata.lat + 
                                      ' Lon :' + geodata.lon);
                     if(websocket !== null) {
-                        websocket.emit('tweet', { user : tweet.user.name , text: tweet.text, lat: geodata.lat ,
-                                                profileImage : tweet.user.profile_image_url,
-                                                lon: geodata.lon , count : tweetcounter, 
-                                                failedLookUps: failedLookUps,
-                                    positive: score.positive,
-                                    negative: score.negative
-                                            });
-
-
-                        if(tweet.text.match(/(\s|^)love(\s|$)/i)){
-                                websocket.emit('pos_tweet', {lat: geodata.lat,
-                                                             lon: geodata.lon});
+                        if(tweet.text.match(/(\s|^)you(\s|$)/i)){
+                                websocket.emit('tweet', {poslat: geodata.lat, 
+                                                         poslon: geodata.lon,
+                                                         count : tweetcounter, 
+                                                         failedLookUps: failedLookUps});
+                                                         //pos_percent: pos_percent});
                         }
-                        if(tweet.text.match(/(\s|^)hate(\s|$)/i)){
-                                websocket.emit('neg_tweet', {lat: geodata.lat,
-                                                             lon: geodata.lon});
+                        if(tweet.text.match(/(\s|^)me(\s|$)/i)){
+                                websocket.emit('tweet', {neglat: geodata.lat, 
+                                                         neglon: geodata.lon,
+                                                         count : tweetcounter, 
+                                                         failedLookUps: failedLookUps});
+                                                         //neg_percent: neg_percent});
                         }
                     }   
                 } else {
-                    logger.debug('Could not resolve location for ' + tweet.user.location 
-                                               + ' error was this ', err);
+                    logger.debug('Could not resolve location for %s' + tweet.user.location 
+                                               + ' error was this %s ', err);
                     failedLookUps++;
                     }
            });
       });
   });
-  
-           
-  function calculateRG(positive, negative) {
-    var total  = positive + negative;
-    var green = Math.round( (positive / total) * 255 );
-    var red = Math.round( (negative / total ) * 255 );
-    return {
-        'positive' : green,
-        'negative' : red
-    }
-  }
+
